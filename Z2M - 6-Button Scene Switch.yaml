@@ -1,0 +1,80 @@
+blueprint:
+  name: Z2M - 6-Button Scene Switch U86KCJ-ZP
+  description: 'Control anything using the 6-button scene switch U86KCJ-ZP
+
+    Inspired by the blueprint of @bouyssic (https://www.zigbee2mqtt.io/devices/U86KCJ-ZP.html)'
+  domain: automation
+  input:
+    switch:
+      name: 6-button scene switch
+      description: 6-button scene switch to use (by model U86KCJ-ZP)
+      selector:
+        entity:
+          domain: sensor
+          integration: mqtt
+          multiple: false
+    button_1_single:
+      name: Scene Switch 1 Button - Single Click
+      description: Action to run after single click of scenery 1 button
+      default: []
+      selector:
+        action: {}
+    button_2_single:
+      name: Scene Switch 2 Button - Single Click
+      description: Action to run after single click of scenery 2 button
+      default: []
+      selector:
+        action: {}
+    button_3_single:
+      name: Scene Switch 3 Button -  Single Click
+      description: Action to run after single click of scenery 3 button
+      default: []
+      selector:
+        action: {}
+    button_4_single:
+      name: Scene Switch 4 Button - Single Click
+      description: Action to run after single click of scenery 4 button
+      default: []
+      selector:
+        action: {}
+    button_5_single:
+      name: Scene Switch 5 Button - Single Click
+      description: Action to run after single click of scenery 5 button
+      default: []
+      selector:
+        action: {}
+    button_6_single:
+      name: Scene Switch 6 Button - Single Click
+      description: Action to run after single click of scenery 6 button
+      default: []
+      selector:
+        action: {}
+  source_url: https://www.zigbee2mqtt.io/devices/U86KCJ-ZP.html
+mode: single
+max_exceeded: silent
+trigger:
+- platform: state
+  entity_id: !input switch
+  attribute: action
+action:
+- variables:
+    command: '{{ trigger.to_state.state }}'
+- choose:
+  - conditions:
+    - '{{ command == ''scene_1'' }}'
+    sequence: !input button_1_single
+  - conditions:
+    - '{{ command == ''scene_2'' }}'
+    sequence: !input button_2_single
+  - conditions:
+    - '{{ command == ''scene_3'' }}'
+    sequence: !input button_3_single
+  - conditions:
+    - '{{ command == ''scene_4'' }}'
+    sequence: !input button_4_single
+  - conditions:
+    - '{{ command == ''scene_5'' }}'
+    sequence: !input button_5_single
+  - conditions:
+    - '{{ command == ''scene_6'' }}'
+    sequence: !input button_6_single
